@@ -19,7 +19,9 @@ export function fieldToTextField({
   const showError = getIn(touched, field.name) && !!fieldError;
 
   return {
-    error: showError,
+    ...field,
+    ...props,
+    error: !!showError, // Always set error to a boolean
     helperText: showError ? fieldError : helperText,
     disabled: disabled ?? isSubmitting,
     onBlur:
@@ -27,9 +29,6 @@ export function fieldToTextField({
       function (e) {
         fieldOnBlur(e ?? field.name);
       },
-    ...field,
-    value: field.value ?? "",
-    ...props,
   };
 }
 
